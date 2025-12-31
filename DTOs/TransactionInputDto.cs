@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CCFD.Dtos
+namespace Credit_Card_Fraud_Detection.Dtos
 {
     public class TransactionInputDto
     {

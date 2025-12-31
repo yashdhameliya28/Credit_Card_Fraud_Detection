@@ -1,4 +1,4 @@
-﻿namespace CCFD.Dtos
+﻿namespace Credit_Card_Fraud_Detection.Dtos
 {
     public class FraudPredictionResponseDto
     {
