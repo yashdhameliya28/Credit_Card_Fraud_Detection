@@ -14,7 +14,6 @@ namespace Credit_Card_Fraud_Detection.Controllers
     {
         private AppDbContext _context;
         private IValidator<UserDto> _Validator;
-        private readonly object _validator;
 
         public UserController(AppDbContext context, IValidator<UserDto> userValidator)
         {
@@ -46,20 +45,24 @@ namespace Credit_Card_Fraud_Detection.Controllers
         #endregion
 
         #region Get user by ID
-        [HttpGet("id")]
-        public async Task<IActionResult> getByID(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> getByID(long id)
         {
             var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+                return NotFound(new { message = "User not found" });
+
             return Ok(user);
         }
         #endregion
 
         #region Delete user
-        [HttpDelete("id")]
-        public async Task<IActionResult> deleteUser(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> deleteUser(long id)
         {
             var existUser = await _context.Users.FindAsync(id);
-            if (existUser == null) return BadRequest("User not exist");
+            if (existUser == null) return NotFound(new { message = "User not found" });
 
             _context.Users.Remove(existUser);
             await _context.SaveChangesAsync();
@@ -71,8 +74,7 @@ namespace Credit_Card_Fraud_Detection.Controllers
         [HttpPost]
         public async Task<IActionResult> addUser(UserDto dto)
         {
-            // Manual validation
-            ValidationResult result = await _validator.ValidateAsync(dto);
+            var result = _Validator.Validate(dto);
 
             if (!result.IsValid)
             {
@@ -101,8 +103,15 @@ namespace Credit_Card_Fraud_Detection.Controllers
 
         #region Update user
         [HttpPut("{id}")]
-        public async Task<IActionResult> updateUser(int id, UserDto dto)
+        public async Task<IActionResult> updateUser(long id, UserDto dto)
         {
+
+            var result = _Validator.Validate(dto);
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
+
             var existingUser = await _context.Users.FindAsync(id);
             if (existingUser == null) return NotFound();
 

@@ -22,7 +22,8 @@ public class TxnTable
 
     public double? modelRiskScore { get; set; }
 
-    public bool? modelPredicted { get; set; }
+    public bool? modelIsFraud { get; set; }
+
 
     public bool? isFraud { get; set; }
 

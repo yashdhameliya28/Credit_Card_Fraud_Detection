@@ -23,3 +23,13 @@ public class DeviceHistory
 
     public ICollection<TxnTable> txnTables { get; set; } = new List<TxnTable>();
 }
+
+public class DeviceHistoryDTO
+{
+    [Required]
+    public long userID { get; set; }
+
+    public string? deviceName { get; set; }
+    [Required]
+    public string deviceType { get; set; }
+}

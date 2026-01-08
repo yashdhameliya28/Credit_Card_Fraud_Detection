@@ -1,4 +1,5 @@
 using Credit_Card_Fraud_Detection.Data;
+using Credit_Card_Fraud_Detection.Services;
 using Credit_Card_Fraud_Detection.Validators;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,14 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
+builder.Services.AddSingleton<FraudPredictionService>();
+
 
 // Register FluentValidation
 //builder.Services.AddValidatorsFromAssemblyContaining<UserDtoValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UserDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<DeviceHistoryDTO>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
