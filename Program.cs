@@ -18,7 +18,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddSingleton<FraudPredictionService>();
 
-
 // Register FluentValidation
 //builder.Services.AddValidatorsFromAssemblyContaining<UserDtoValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UserDtoValidator>();

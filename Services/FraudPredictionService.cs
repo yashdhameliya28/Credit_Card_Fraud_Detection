@@ -22,7 +22,7 @@ namespace Credit_Card_Fraud_Detection.Services
         public int PredictLabel(OnnxTransactionInput input)
         {
             var inputs = new List<NamedOnnxValue>
-    {
+        {
         NamedOnnxValue.CreateFromTensor("category",
             new DenseTensor<string>(new[] { input.category }, new[] { 1, 1 })),
 
@@ -58,11 +58,5 @@ namespace Credit_Card_Fraud_Detection.Services
                 .First(r => r.Name == "output_label")
                 .AsTensor<long>()[0];
         }
-
-
-
-
-
-
     }
 }
